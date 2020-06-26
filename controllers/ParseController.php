@@ -7,7 +7,7 @@ use app\models\Robot;
 
 class ParseController extends Controller {
 
-    public function actionTest() {
+    public function actionIndex() {
         echo __METHOD__;
     }
 
