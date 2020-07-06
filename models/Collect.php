@@ -10,19 +10,22 @@ use Yii;
 use Exception;
 use keltstr\simplehtmldom\SimpleHTMLDom;
 
-class Robot extends Component {
+class Collect extends Component
+{
 
-    const DEFAULT_URL = "https://wizzair.com/";
+    const DEFAULT_URL = "https://www.foetex.dk/dsgsearchservice/rest/apps/foetexdk/searchers/products?q=*&page=";
 
     public $lastResponce;
     public $client;
     public $lastRequest;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->init();
     }
 
-    public function init() {
+    public function init()
+    {
         parent::init();
         $this->client = new Client([
             'transport' => 'yii\httpclient\CurlTransport',
@@ -30,7 +33,8 @@ class Robot extends Component {
         ]);
     }
 
-    public function getPage($url = '') {
+    public function getPage($url = '')
+    {
         if (empty($url)) {
             $url = self::DEFAULT_URL;
         }
@@ -38,11 +42,9 @@ class Robot extends Component {
         try {
             $request = $this->client->get($url);
             $this->lastResponce = $request->send();
+            $body = $this->lastResponce->content;
+            return json_decode($body);
 
-            $html = SimpleHTMLDom::str_get_html($this->lastResponce->content);
-            foreach($html->find('img') as $element){
-                echo $element->src . '<br>';
-            }
         } catch (Exception $e) {
             echo $e->getMessage() . "" . $e->getCode() . "" . $e->getLine() . "" . $e->getFile();
         }
