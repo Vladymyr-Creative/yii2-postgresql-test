@@ -18,21 +18,21 @@ class Page extends ActiveRecord
         }
 
         self::saveProductsData(self::getProductsData($data));
-        self::savePageLinks(self::getPagesLinks($data));
+//        self::savePageLinks(self::getPagesLinks($data));
     }
 
     public static function getProductsData($data)
     {
-        $path = "documents";
-        $products = $data->$path->$path;
+        $path = 'documents';
+        $products = $data[$path][$path];
         $productsData = [];
         foreach ($products as $product) {
             $itemData = [];
-            $itemData[] = $product->url_da_string;
-            $itemData[] = $product->name_text_da;
-            $itemData[] = $product->code_string;
-            $itemData[] = $product->code_string;
-            $itemData[] = $product->currentPrice;
+            $itemData['link'] = $product['url_da_string'];
+            $itemData['title'] = $product['name_text_da'];
+            $itemData['gtin'] = $product['code_string'];
+            $itemData['sku'] = $product['code_string'];
+            $itemData['price'] = $product['currentPrice'];
             $productsData[] = $itemData;
         }
         return $productsData;
@@ -51,11 +51,15 @@ class Page extends ActiveRecord
     private static function saveProductsData(array $productsData)
     {
         $productsData = self::filterExistingProducts($productsData);
-        try {
-            Yii::$app->db->createCommand()->batchInsert('product', ['link', 'title', 'gtin', 'sku', 'price'], $productsData)->execute();
-        } catch (Exception $e) {
-            die($e);
-        }
+        echo "<pre>";
+        print_r($productsData);
+        echo "</pre>";
+        die;
+//        try {
+//            Yii::$app->db->createCommand()->batchInsert('product', ['link', 'title', 'gtin', 'sku', 'price'], $productsData)->execute();
+//        } catch (Exception $e) {
+//            die($e);
+//        }
     }
 
     private static function savePageLinks(array $pageLinks)
@@ -72,11 +76,17 @@ class Page extends ActiveRecord
     {
         $gtins = [];
         foreach ($productsData as $product) {
-            $gtins[] = $product->gtin;
+            $gtins[] = empty($product['gtin']) ? "" : $product['gtin'];
         }
-        $existingGtins = Yii::$app->db->createCommand('SELECT gtin FROM product')->where(['gtin' => $gtins])->all();
+//        $existingGtins = Yii::$app->db->createCommand()->select('gtin')->from('product')->queryAll();//->where(['gtin'=> ['100529760', '100313626', '100313615', '100529763']])->queryAll();
+        $existingGtins = Yii::$app->db->createCommand('SELECT gtin FROM product ')->queryAll();//->where(['gtin'=> ['100529760', '100313626', '100313615', '100529763']])->queryAll();
+//        $existingGtins = (new Query())->select('gtin')->from('product')->where(['gtin' => "100529760"]);
+        echo "<pre>";
+        print_r($existingGtins);
+        echo "</pre>";
+        die;
         foreach ($productsData as $product) {
-            if (in_array($product->gtin, $existingGtins)){
+            if (in_array($product->gtin, $existingGtins)) {
                 unset($product);
             }
         }

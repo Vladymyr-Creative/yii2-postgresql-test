@@ -43,7 +43,7 @@ class Collect extends Component
             $request = $this->client->get($url);
             $this->lastResponce = $request->send();
             $body = $this->lastResponce->content;
-            return json_decode($body);
+            return json_decode($body, true);
 
         } catch (Exception $e) {
             echo $e->getMessage() . "" . $e->getCode() . "" . $e->getLine() . "" . $e->getFile();
