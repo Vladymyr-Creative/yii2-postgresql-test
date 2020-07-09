@@ -6,6 +6,7 @@ use Yii;
 use yii\db\ActiveRecord;
 use yii\db\Command;
 use yii\db\Exception;
+use \yii\db\Query;
 
 class Page extends ActiveRecord
 {
@@ -78,10 +79,14 @@ class Page extends ActiveRecord
         foreach ($productsData as $product) {
             $gtins[] = empty($product['gtin']) ? "" : $product['gtin'];
         }
-//        $existingGtins = Yii::$app->db->createCommand()->select('gtin')->from('product')->queryAll();//->where(['gtin'=> ['100529760', '100313626', '100313615', '100529763']])->queryAll();
-        $existingGtins = Yii::$app->db->createCommand('SELECT gtin FROM product ')->queryAll();//->where(['gtin'=> ['100529760', '100313626', '100313615', '100529763']])->queryAll();
-//        $existingGtins = (new Query())->select('gtin')->from('product')->where(['gtin' => "100529760"]);
+        $existingGtins = (new Query())
+            ->select('gtin')
+            ->from('product')
+//            ->where(['gtin'=>"100000884"])
+            ->where(['in', 'gtin', $gtins])
+            ->all();
         echo "<pre>";
+        print_r($gtins);
         print_r($existingGtins);
         echo "</pre>";
         die;
