@@ -11,6 +11,30 @@ use \yii\db\Query;
 class Page extends ActiveRecord
 {
     const API_URL = "https://www.foetex.dk/dsgsearchservice/rest/apps/foetexdk/searchers/products";
+    const PRODUCT_TABLE = 'product';
+    const PAGE_TABLE = 'page';
+    const INSERT_TEMPLATES = [
+        self::PAGE_TABLE => ['link'],
+        self::PRODUCT_TABLE => ['link', 'title', 'gtin', 'sku', 'price'],
+    ];
+    const Map = [
+        self::PRODUCT_TABLE => [
+            'path' => ['documents', 'documents', 'pages'],
+            'map' => [
+                'link' => 'url_da_string',
+                'title' => 'name_text_da',
+                'gtin' => 'code_string',
+                'sku' => 'code_string',
+                'price' => 'currentPrice',
+            ]
+        ],
+        self::PAGE_TABLE => [
+            'path' => ['documents', 'pagination', 'pages'],
+            'map' => [
+                'link' => 'query'
+            ],
+        ]
+    ];
 
     public static function handleData($data)
     {
@@ -18,87 +42,105 @@ class Page extends ActiveRecord
             return false;
         }
 
-        self::saveProductsData(self::getProductsData($data));
-//        self::savePageLinks(self::getPagesLinks($data));
+        self::saveData(self::getDataFor($data, self::PRODUCT_TABLE), ['key' => 'gtin', 'table' => self::PRODUCT_TABLE]);
+        self::saveData(self::getDataFor($data, self::PAGE_TABLE), ['key' => 'link', 'table' => self::PAGE_TABLE]);
     }
 
-    public static function getProductsData($data)
+    public static function getDataFor($data, $table)
     {
-        $path = 'documents';
-        $products = $data[$path][$path];
-        $productsData = [];
-        foreach ($products as $product) {
+        $elements = self::getElemByPath($data, $table);
+        $resultData = [];
+        foreach ($elements as $element) {
             $itemData = [];
-            $itemData['link'] = $product['url_da_string'];
-            $itemData['title'] = $product['name_text_da'];
-            $itemData['gtin'] = $product['code_string'];
-            $itemData['sku'] = $product['code_string'];
-            $itemData['price'] = $product['currentPrice'];
-            $productsData[] = $itemData;
+            foreach (self::INSERT_TEMPLATES[$table] as $item) {
+                switch ($table) {
+                    case self::PRODUCT_TABLE:
+                        $itemData[$item] = isset($element[self::Map[$table]['map'][$item]]) ? $element[self::Map[$table]['map'][$item]] : null;
+                        break;
+                    case self::PAGE_TABLE:
+                        $itemData[$item] = isset($element[self::Map[$table]['map'][$item]]) ? self::API_URL . '?' . $element[self::Map[$table]['map'][$item]] : null;
+                        break;
+                }
+            }
+            $resultData[] = $itemData;
         }
-        return $productsData;
+        return $resultData;
     }
 
-    public static function getPagesLinks($data)
+    private static function saveData(array $productsData, $params)
     {
-        $pages = $data->pagination->pages;
-        $pageLinks = [];
-        foreach ($pages as $page) {
-            $pageLinks[] = self::API_URL . "?" . $page->query;
-        }
-        return $pageLinks;
-    }
+        $table = $params['table'];
+        $productsData = self::filterExistingData($productsData, $params);
+        $productsData = self::prepareDataFor($productsData, $table);
 
-    private static function saveProductsData(array $productsData)
-    {
-        $productsData = self::filterExistingProducts($productsData);
-        echo "<pre>";
-        print_r($productsData);
-        echo "</pre>";
-        die;
-//        try {
-//            Yii::$app->db->createCommand()->batchInsert('product', ['link', 'title', 'gtin', 'sku', 'price'], $productsData)->execute();
-//        } catch (Exception $e) {
-//            die($e);
-//        }
-    }
-
-    private static function savePageLinks(array $pageLinks)
-    {
-        $pageLinks = self::filterExistingPages($pageLinks);
         try {
-            Yii::$app->db->createCommand()->batchInsert('page', ['link'], $pageLinks)->execute();
+            Yii::$app->db->createCommand()->batchInsert($table, self::INSERT_TEMPLATES[$table], $productsData)->execute();
         } catch (Exception $e) {
-            die($e);
+            exit($e);
         }
     }
 
-    private static function filterExistingProducts(array $productsData)
+    private static function filterExistingData(array $data, $params)
     {
-        $gtins = [];
-        foreach ($productsData as $product) {
-            $gtins[] = empty($product['gtin']) ? "" : $product['gtin'];
-        }
-        $existingGtins = (new Query())
-            ->select('gtin')
-            ->from('product')
-//            ->where(['gtin'=>"100000884"])
-            ->where(['in', 'gtin', $gtins])
+        $key = $params['key'];
+        $table = $params['table'];
+        $variants = self::getFilterVariants($data, $params);
+
+        $existingData = (new Query())
+            ->select([$key])
+            ->from($table)
+            ->where(['in', $key, $variants])
             ->all();
-        echo "<pre>";
-        print_r($gtins);
-        print_r($existingGtins);
-        echo "</pre>";
-        die;
-        foreach ($productsData as $product) {
-            if (in_array($product->gtin, $existingGtins)) {
-                unset($product);
+
+        foreach ($data as $index => $product) {
+            foreach ($existingData as $item) {
+                if ($product[$key] == $item[$key]) {
+                    unset($data[$index]);
+                }
             }
         }
-        return $productsData;
+
+        return $data;
     }
 
-    private static function filterExistingPages(array $pageLinks)
+    private static function prepareDataFor(array $productsData, $table)
     {
+        $result = [];
+
+        foreach ($productsData as $product) {
+            $preparedProduct = [];
+            foreach (self::INSERT_TEMPLATES[$table] as $item) {
+                $preparedProduct[$item] = isset($product[$item]) ? $product[$item] : null;
+            }
+            $result[] = $preparedProduct;
+        }
+        return $result;
+    }
+
+    private static function getElemByPath($data, $table)
+    {
+        $path = self::Map[$table]['path'];
+        $destination = $data;
+        try {
+            foreach ($path as $item) {
+                if (!isset($destination[$item])) {
+                    return [];
+                }
+                $destination = $destination[$item];
+            }
+            return $destination;
+        } catch (Exception $e) {
+            exit($e);
+        }
+    }
+
+    private static function getFilterVariants($data, $params)
+    {
+        $key = $params['key'];
+        $variants = [];
+        foreach ($data as $product) {
+            $variants[] = empty($product[$key]) ? "" : $product[$key];
+        }
+        return $variants;
     }
 }

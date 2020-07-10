@@ -13,7 +13,7 @@ use keltstr\simplehtmldom\SimpleHTMLDom;
 class Collect extends Component
 {
 
-    const DEFAULT_URL = "https://www.foetex.dk/dsgsearchservice/rest/apps/foetexdk/searchers/products?q=*&page=";
+    const DEFAULT_URL = "https://www.foetex.dk/dsgsearchservice/rest/apps/foetexdk/searchers/products?q=*&page=5";
 
     public $lastResponce;
     public $client;
