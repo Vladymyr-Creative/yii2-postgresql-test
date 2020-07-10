@@ -28,6 +28,7 @@
         "codeception/codeception": "^4.0",
         "codeception/verify": "~0.5.0 || ~1.1.0",
         "codeception/specify": "~0.4.6",
+        "fedemotta/yii2-cronjob": "*",
         "symfony/browser-kit": ">=2.7 <=4.2.4",
         "codeception/module-filesystem": "^1.0.0",
         "codeception/module-yii2": "^1.0.0",

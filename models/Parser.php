@@ -3,12 +3,10 @@
 namespace app\models;
 
 use Yii;
-use yii\db\ActiveRecord;
-use yii\db\Command;
 use yii\db\Exception;
 use \yii\db\Query;
 
-class Page extends ActiveRecord
+class Parser
 {
     const API_URL = "https://www.foetex.dk/dsgsearchservice/rest/apps/foetexdk/searchers/products";
     const PRODUCT_TABLE = 'product';

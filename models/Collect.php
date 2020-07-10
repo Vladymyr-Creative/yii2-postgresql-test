@@ -12,8 +12,7 @@ use keltstr\simplehtmldom\SimpleHTMLDom;
 
 class Collect extends Component
 {
-
-    const DEFAULT_URL = "https://www.foetex.dk/dsgsearchservice/rest/apps/foetexdk/searchers/products?q=*&page=5";
+    const DEFAULT_URL = "https://www.foetex.dk/dsgsearchservice/rest/apps/foetexdk/searchers/products?q=*&page=3";
 
     public $lastResponce;
     public $client;
@@ -33,7 +32,7 @@ class Collect extends Component
         ]);
     }
 
-    public function getPage($url = '')
+    public function getPage($url = null)
     {
         if (empty($url)) {
             $url = self::DEFAULT_URL;

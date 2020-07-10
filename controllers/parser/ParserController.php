@@ -2,17 +2,19 @@
 
 namespace app\controllers\parser;
 
-use app\models\Page;
+use app\models\Parser;
 use yii\web\Controller;
 use app\models\Collect;
+use app\models\ParseUrl;
 
-class ParseController extends Controller {
+class ParserController extends Controller {
 
     public function actionIndex() {
         echo __METHOD__;
     }
 
-    public function actionCollect($url = '') {
+    public function actionCollect() {
+        $url = $this->getUrlForParse();
         $collection = new Collect();
         $result = $collection->getPage($url);
         if (!empty($result)) {
@@ -21,6 +23,11 @@ class ParseController extends Controller {
     }
 
     public function recordData($data) {
-        Page::handleData($data);
+        Parser::handleData($data);
+    }
+
+    private function getUrlForParse()
+    {
+        return ParseUrl::getUrl();
     }
 }
