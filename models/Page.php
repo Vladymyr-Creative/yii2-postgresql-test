@@ -19,7 +19,7 @@ class Page extends ActiveRecord
     ];
     const Map = [
         self::PRODUCT_TABLE => [
-            'path' => ['documents', 'documents', 'pages'],
+            'path' => ['documents', 'documents'],
             'map' => [
                 'link' => 'url_da_string',
                 'title' => 'name_text_da',
@@ -64,6 +64,7 @@ class Page extends ActiveRecord
             }
             $resultData[] = $itemData;
         }
+
         return $resultData;
     }
 
@@ -121,6 +122,7 @@ class Page extends ActiveRecord
     {
         $path = self::Map[$table]['path'];
         $destination = $data;
+
         try {
             foreach ($path as $item) {
                 if (!isset($destination[$item])) {
