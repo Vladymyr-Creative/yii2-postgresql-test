@@ -7,22 +7,27 @@ use yii\web\Controller;
 use app\models\Collect;
 use app\models\ParseUrl;
 
-class ParserController extends Controller {
+class ParserController extends Controller
+{
 
-    public function actionIndex() {
+    public function actionIndex()
+    {
         echo __METHOD__;
     }
 
-    public function actionCollect() {
+    public function actionCollect()
+    {
         $url = $this->getUrlForParse();
         $collection = new Collect();
         $result = $collection->getPage($url);
         if (!empty($result)) {
             $this->recordData($result);
+            ParseUrl::makeUrlDone();
         }
     }
 
-    public function recordData($data) {
+    public function recordData($data)
+    {
         Parser::handleData($data);
     }
 

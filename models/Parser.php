@@ -74,6 +74,7 @@ class Parser
 
         try {
             Yii::$app->db->createCommand()->batchInsert($table, self::INSERT_TEMPLATES[$table], $productsData)->execute();
+            echo "ok";
         } catch (Exception $e) {
             exit($e);
         }
@@ -91,6 +92,9 @@ class Parser
             ->where(['in', $key, $variants])
             ->all();
 
+//        echo "<pre>";
+//        var_dump($existingData);
+//        die;
         foreach ($data as $index => $product) {
             foreach ($existingData as $item) {
                 if ($product[$key] == $item[$key]) {
