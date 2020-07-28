@@ -13,7 +13,7 @@ class Parser
     const PAGE_TABLE = 'page';
     const INSERT_TEMPLATES = [
         self::PAGE_TABLE => ['link'],
-        self::PRODUCT_TABLE => ['link', 'title', 'gtin', 'sku', 'price'],
+        self::PRODUCT_TABLE => ['link', 'title', 'gtin', 'sku', 'price', 'size', 'img'],
     ];
     const Map = [
         self::PRODUCT_TABLE => [
@@ -24,6 +24,8 @@ class Parser
                 'gtin' => 'code_string',
                 'sku' => 'code_string',
                 'price' => 'currentPrice',
+                'size' => 'summary_text_da',
+                'img' => 'img-original_string',
             ]
         ],
         self::PAGE_TABLE => [
@@ -92,9 +94,6 @@ class Parser
             ->where(['in', $key, $variants])
             ->all();
 
-//        echo "<pre>";
-//        var_dump($existingData);
-//        die;
         foreach ($data as $index => $product) {
             foreach ($existingData as $item) {
                 if ($product[$key] == $item[$key]) {

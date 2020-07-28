@@ -9,6 +9,7 @@ use app\models\ParseUrl;
 
 class ParserController extends Controller
 {
+    private $parseUrl = null;
 
     public function actionIndex()
     {
@@ -17,12 +18,13 @@ class ParserController extends Controller
 
     public function actionCollect()
     {
-        $url = $this->getUrlForParse();
+        $this->parseUrl = new ParseUrl();
+        $urlData = $this->getUrlDataForParse();
         $collection = new Collect();
-        $result = $collection->getPage($url);
+        $result = $collection->getPage($urlData['link']);
         if (!empty($result)) {
             $this->recordData($result);
-            ParseUrl::makeUrlDone();
+            $this->parseUrl->makeUrlDone($urlData['id']);
         }
     }
 
@@ -31,8 +33,13 @@ class ParserController extends Controller
         Parser::handleData($data);
     }
 
-    private function getUrlForParse()
+    private function getUrlDataForParse()
     {
-        return ParseUrl::getUrl();
+        $urlData = $this->parseUrl->getUrlData();
+        if (empty($urlData)) {
+            return null;
+        }
+        $this->parseUrl->makeUrlInprogres($urlData['id']);
+        return $urlData;
     }
 }

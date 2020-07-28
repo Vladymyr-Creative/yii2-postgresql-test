@@ -2,60 +2,50 @@
 
 namespace app\models;
 
+use yii\base\Component;
 use Yii;
 use Exception;
 use \yii\db\Query;
 use app\models\Parser;
 
-class ParseUrl
+class ParseUrl extends Component
 {
     const STATUS_WAITING = "waiting";
     const STATUS_IN_PROGRESS = "in progress";
     const STATUS_DONE = "done";
 
-    private $urlId = null;
-
-    private function changeStatusTo($status)
+    public function changeStatusTo($id,$status)
     {
-        $urlId = $this->getUrlId();
-        if (empty($urlId)) {
+        if (empty($id)) {
             return;
         }
-        Yii::$app->db->createCommand("UPDATE page SET status='$status' WHERE id='$urlId'")
+        Yii::$app->db->createCommand("UPDATE page SET status='$status' WHERE id='$id'")
             ->execute();
     }
 
-    private function makeUrlDone()
+    public function makeUrlDone($id)
     {
-       $this->changeStatusTo(self::STATUS_DONE);
+       $this->changeStatusTo($id, self::STATUS_DONE);
     }
 
-    public function getUrl()
+    public function makeUrlInprogres($id)
     {
-        $key = ['id', 'link', 'status'];
+        $this->changeStatusTo($id, self::STATUS_IN_PROGRESS);
+    }
+
+    public function getUrlData()
+    {
+        $keys = ['id', 'link', 'status'];
         $table = Parser::PAGE_TABLE;
-        $url = (new Query())
-            ->select($key)
+        $urlData = (new Query())
+            ->select($keys)
             ->from($table)
             ->where('status=:status', [':status' => self::STATUS_WAITING])
             ->one();
 
-        if (empty($url)) {
+        if (empty($urlData)) {
             return null;
         }
-
-        $this->setUrlId($url["id"]);
-        $this->changeStatusTo(self::STATUS_IN_PROGRESS);
-        return $url['link'];
-    }
-
-    public function getUrlId()
-    {
-        return $this->urlId;
-    }
-
-    public function setUrlId($urlId)
-    {
-        $this->urlId = $urlId;
+        return $urlData;
     }
 }
