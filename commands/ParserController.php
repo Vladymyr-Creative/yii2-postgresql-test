@@ -1,9 +1,9 @@
 <?php
 
-namespace app\controllers\parser;
+namespace app\commands;
 
 use app\models\Parser;
-use yii\web\Controller;
+use yii\console\Controller;
 use app\models\Collect;
 use app\models\ParseUrl;
 
@@ -12,11 +12,6 @@ class ParserController extends Controller
     private $parseUrl = null;
 
     public function actionIndex()
-    {
-        echo __METHOD__;
-    }
-
-    public function actionCollect()
     {
         $this->parseUrl = new ParseUrl();
         $urlData = $this->getUrlDataForParse();
