@@ -2,52 +2,166 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = Yii::$app->name;
 ?>
-<div class="site-index">
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+<!-- Nav -->
+<nav id="menu">
+    <ul class="links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="elements.html">Elements</a></li>
+        <li><a href="generic.html">Generic</a></li>
+    </ul>
+</nav>
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+<!-- Banner -->
+<section id="banner">
+    <div class="inner">
+        <h1>Industrious</h1>
+        <p>A responsive business oriented template with a video background<br/>
+            designed by <a href="https://templated.co/">TEMPLATED</a> and released under the Creative Commons
+            License.</p>
     </div>
+    <video autoplay loop muted playsinline src="images/banner.mp4"></video>
+</section>
 
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
+<!-- Highlights -->
+<section class="wrapper">
+    <div class="inner">
+        <header class="special">
+            <h2>Sem turpis amet semper</h2>
+            <p>In arcu accumsan arcu adipiscing accumsan orci ac. Felis id enim aliquet. Accumsan ac integer
+                lobortis commodo ornare aliquet accumsan erat tempus amet porttitor.</p>
+        </header>
+        <div class="highlights">
+            <section>
+                <div class="content">
+                    <header>
+                        <a href="#" class="icon fa-vcard-o"><span class="label">Icon</span></a>
+                        <h3>Feugiat consequat</h3>
+                    </header>
+                    <p>Nunc lacinia ante nunc ac lobortis ipsum. Interdum adipiscing gravida odio porttitor sem non
+                        mi integer non faucibus.</p>
+                </div>
+            </section>
+            <section>
+                <div class="content">
+                    <header>
+                        <a href="#" class="icon fa-files-o"><span class="label">Icon</span></a>
+                        <h3>Ante sem integer</h3>
+                    </header>
+                    <p>Nunc lacinia ante nunc ac lobortis ipsum. Interdum adipiscing gravida odio porttitor sem non
+                        mi integer non faucibus.</p>
+                </div>
+            </section>
+            <section>
+                <div class="content">
+                    <header>
+                        <a href="#" class="icon fa-floppy-o"><span class="label">Icon</span></a>
+                        <h3>Ipsum consequat</h3>
+                    </header>
+                    <p>Nunc lacinia ante nunc ac lobortis ipsum. Interdum adipiscing gravida odio porttitor sem non
+                        mi integer non faucibus.</p>
+                </div>
+            </section>
+            <section>
+                <div class="content">
+                    <header>
+                        <a href="#" class="icon fa-line-chart"><span class="label">Icon</span></a>
+                        <h3>Interdum gravida</h3>
+                    </header>
+                    <p>Nunc lacinia ante nunc ac lobortis ipsum. Interdum adipiscing gravida odio porttitor sem non
+                        mi integer non faucibus.</p>
+                </div>
+            </section>
+            <section>
+                <div class="content">
+                    <header>
+                        <a href="#" class="icon fa-paper-plane-o"><span class="label">Icon</span></a>
+                        <h3>Faucibus consequat</h3>
+                    </header>
+                    <p>Nunc lacinia ante nunc ac lobortis ipsum. Interdum adipiscing gravida odio porttitor sem non
+                        mi integer non faucibus.</p>
+                </div>
+            </section>
+            <section>
+                <div class="content">
+                    <header>
+                        <a href="#" class="icon fa-qrcode"><span class="label">Icon</span></a>
+                        <h3>Accumsan viverra</h3>
+                    </header>
+                    <p>Nunc lacinia ante nunc ac lobortis ipsum. Interdum adipiscing gravida odio porttitor sem non
+                        mi integer non faucibus.</p>
+                </div>
+            </section>
         </div>
-
     </div>
-</div>
+</section>
+
+<!-- CTA -->
+<section id="cta" class="wrapper">
+    <div class="inner">
+        <h2>Curabitur ullamcorper ultricies</h2>
+        <p>Nunc lacinia ante nunc ac lobortis. Interdum adipiscing gravida odio porttitor sem non mi integer non
+            faucibus ornare mi ut ante amet placerat aliquet. Volutpat eu sed ante lacinia sapien lorem accumsan
+            varius montes viverra nibh in adipiscing. Lorem ipsum dolor vestibulum ante ipsum primis in faucibus
+            vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing sed feugiat eu faucibus. Integer
+            ac sed amet praesent. Nunc lacinia ante nunc ac gravida.</p>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="wrapper">
+    <div class="inner">
+        <header class="special">
+            <h2>Faucibus consequat lorem</h2>
+            <p>In arcu accumsan arcu adipiscing accumsan orci ac. Felis id enim aliquet. Accumsan ac integer
+                lobortis commodo ornare aliquet accumsan erat tempus amet porttitor.</p>
+        </header>
+        <div class="testimonials">
+            <section>
+                <div class="content">
+                    <blockquote>
+                        <p>Nunc lacinia ante nunc ac lobortis ipsum. Interdum adipiscing gravida odio porttitor sem
+                            non mi integer non faucibus.</p>
+                    </blockquote>
+                    <div class="author">
+                        <div class="image">
+                            <img src="images/pic01.jpg" alt=""/>
+                        </div>
+                        <p class="credit">- <strong>Jane Doe</strong> <span>CEO - ABC Inc.</span></p>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="content">
+                    <blockquote>
+                        <p>Nunc lacinia ante nunc ac lobortis ipsum. Interdum adipiscing gravida odio porttitor sem
+                            non mi integer non faucibus.</p>
+                    </blockquote>
+                    <div class="author">
+                        <div class="image">
+                            <img src="images/pic03.jpg" alt=""/>
+                        </div>
+                        <p class="credit">- <strong>John Doe</strong> <span>CEO - ABC Inc.</span></p>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="content">
+                    <blockquote>
+                        <p>Nunc lacinia ante nunc ac lobortis ipsum. Interdum adipiscing gravida odio porttitor sem
+                            non mi integer non faucibus.</p>
+                    </blockquote>
+                    <div class="author">
+                        <div class="image">
+                            <img src="images/pic02.jpg" alt=""/>
+                        </div>
+                        <p class="credit">- <strong>Janet Smith</strong> <span>CEO - ABC Inc.</span></p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
