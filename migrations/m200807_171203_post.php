@@ -40,7 +40,7 @@ class m200807_171203_post extends Migration
      */
     public function safeDown()
     {
-        $this->dropForeignKey(
+        $this->dropreignKey(
             'fk-post-category_id',
             'post');
         $this->dropTable('{{%post}}');
