@@ -10,4 +10,9 @@ class Post extends ActiveRecord
     {
         return 'country';
     }
+
+    public static function getCategory()
+    {
+        return $this->hasOne(Category::class, ['id'=>'category_id']);
+    }
 }

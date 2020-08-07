@@ -1,6 +1,8 @@
 <?php
 
 /* @var $this yii\web\View */
+use \yii\helpers\Html;
+use \yii\helpers\Url;
 
 $this->title = Yii::$app->name;
 ?>
@@ -40,6 +42,7 @@ $this->title = Yii::$app->name;
                     <section>
                         <div class="content">
                             <header>
+                                <h2><a href="<?php Url::to(['post/view', 'id'=>$post->id]); ?>"><?php echo $post->code; ?></a></h2>
                                 <a href="#" class="icon fa-vcard-o"><span class="label">Icon</span></a>
                                 <h3>
                                     <?php echo $post->name; ?>
@@ -47,6 +50,15 @@ $this->title = Yii::$app->name;
                                 </h3>
                             </header>
                             <p>Population - <?php echo $post->population; ?>.</p>
+                            <?php Html::img("@web/{$post->img}")?>
+
+                            <p>Category -
+                                <a href="<?php Url::to(['category/view', 'alias'=>$post->category->alias]); ?>">
+                                    <?php echo $post->category->name; ?>
+                                </a>.
+                            </p>
+                            <p>Date - <?php echo $post->created_at; ?>.</p>
+                            <p>Date - <?php Yii::$app->formatter->asDate($post->created_at, "php:d.m.Y"); ?>.</p>
                         </div>
 
                     </section>
