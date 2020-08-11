@@ -19,7 +19,7 @@ class m200807_171203_post extends Migration
             'excerpt' => $this->text(),
             'content' => $this->text(),
             'img' => $this->text(),
-            'created_at' => $this->dateTime(),
+            'created_at' => $this->dateTime()->defaultExpression('NOW()'),
             'keywords' => $this->string(),
             'description' => $this->text(),
         ]);
@@ -40,7 +40,7 @@ class m200807_171203_post extends Migration
      */
     public function safeDown()
     {
-        $this->dropreignKey(
+        $this->dropForeignKey(
             'fk-post-category_id',
             'post');
         $this->dropTable('{{%post}}');

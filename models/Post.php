@@ -8,10 +8,10 @@ class Post extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'country';
+        return 'post';
     }
 
-    public static function getCategory()
+    public function getCategory()
     {
         return $this->hasOne(Category::class, ['id'=>'category_id']);
     }
