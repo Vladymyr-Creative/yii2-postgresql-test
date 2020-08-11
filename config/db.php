@@ -3,8 +3,8 @@
 return [
     'class' => 'yii\db\Connection',
     'dsn' => 'pgsql:host=localhost;port=5432;dbname=yii2basic',
-//    'username' => 'postgres',
-    'username' => 'flexi',
+    'username' => 'postgres',
+//    'username' => 'flexi',
     'password' => 'flexi140',
     'charset' => 'utf8',
 
