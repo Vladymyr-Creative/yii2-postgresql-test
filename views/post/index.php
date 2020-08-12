@@ -1,8 +1,10 @@
 <?php
 
 /* @var $this yii\web\View */
+
 use \yii\helpers\Html;
 use \yii\helpers\Url;
+use yii\widgets\LinkPager;
 
 $this->title = Yii::$app->name;
 ?>
@@ -42,17 +44,16 @@ $this->title = Yii::$app->name;
                     <section>
                         <div class="content">
                             <header>
-                                <h2><a href="<?php Url::to(['post/view', 'id'=>$post->id]); ?>"><?php echo $post->excerpt; ?></a></h2>
                                 <a href="#" class="icon fa-vcard-o"><span class="label">Icon</span></a>
-                                <h3>
-                                    <?php echo $post->title; ?>
-                                </h3>
+                                <h2>
+                                 ssss   <a href="<?php Url::to(['post/view', 'id' => $post->id]); ?>"><?php echo $post->title; ?>
+                                </h2>
                             </header>
-                            <p><?php echo $post->excerpt; ?>.</p>
-                            <?php Html::img("@web/{$post->img}")?>
+                            <p><?php echo $post->excerpt; ?>.</p>title
+                            <?php Html::img("@web/{$post->img}") ?>
 
                             <p>Category -
-                                <a href="<?php Url::to(['category/view', 'alias'=>$post->category->alias]); ?>">
+                                <a href="<?php Url::to(['category/view', 'alias' => $post->category->alias]); ?>">
                                     <?php echo $post->category->title; ?>
                                 </a>.
                             </p>
@@ -68,6 +69,7 @@ $this->title = Yii::$app->name;
             ?>
         </div>
     </div>
+    <center><?= LinkPager::widget(['pagination' => $pagination]) ?></center>
 </section>
 
 <!-- CTA -->

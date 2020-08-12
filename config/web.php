@@ -12,19 +12,20 @@ $config = [
     'language' => 'en',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
-    'defaultRoute' => "post/",
+    'defaultRoute' => "post/index",
     'components' => [
-                'formatter' =>[
-                    'dateFormat' => 'dd.MM.yyyy',
+        'formatter' => [
+            'dateFormat' => 'dd.MM.yyyy',
 //                    'decimalSeparator' => ',',
 //                    'thousandSeparator' => ' ',
 //                    'currencyCode' => 'EUR',
-                ],
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'CtIdgB_gdnxp20Y9oLTWl7rgPCfG8Q3Y',
+            'baseUrl' => '',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -53,13 +54,17 @@ $config = [
             ],
         ],
         'db' => $db,
-//        'urlManager' => [
-//            'enablePrettyUrl' => true,
-//            'showScriptName' => false,
-//            'enableStrictParsing' => false,
-//            'rules' => [
-//            ],
-//        ],
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'enableStrictParsing' => false,
+            'rules' => [
+                'page/<page:\d+>' => 'post/index',
+                '/' => 'post/index',
+                'post/<id:\d+>' => 'post/view',
+                'category/<alias:[A-Za-z\d-]+>' => 'category/view'
+            ],
+        ],
     ],
     'params' => $params,
 ];
