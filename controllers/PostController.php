@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\RegisterForm;
+use Yii;
 use yii\web\Controller;
 use yii\data\Pagination;
 use app\models\Post;
@@ -42,6 +44,23 @@ class PostController extends Controller
     {
         var_dump($id);
         die;
+    }
+
+    public function actionRegister()
+    {
+//        if (!Yii::$app->user->isGuest) {
+//            return $this->goHome();
+//        }
+
+        $model = new RegisterForm();
+//        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+//            return $this->goBack();
+//        }
+
+        $model->password = '';
+        return $this->render('register', [
+            'model' => $model,
+        ]);
     }
 
 }

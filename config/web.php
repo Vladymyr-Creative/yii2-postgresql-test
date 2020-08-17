@@ -14,7 +14,7 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
     ],
-    'defaultRoute' => "post/index",
+//    'defaultRoute' => "post/index",
     'components' => [
         'formatter' => [
             'dateFormat' => 'dd.MM.yyyy',
@@ -59,10 +59,10 @@ $config = [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-                'page/<page:\d+>' => 'post/index',
-                '/' => 'post/index',
-                'post/<id:\d+>' => 'post/view',
-                'category/<alias:[A-Za-z\d-]+>' => 'category/view'
+//                'page/<page:\d+>' => 'post/index',
+//                '/' => 'post/index',
+//                'post/<id:\d+>' => 'post/view',
+//                'category/<alias:[A-Za-z\d-]+>' => 'category/view'
             ],
         ],
     ],

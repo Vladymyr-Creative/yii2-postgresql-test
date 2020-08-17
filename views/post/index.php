@@ -46,7 +46,7 @@ $this->title = Yii::$app->name;
                             <header>
                                 <a href="#" class="icon fa-vcard-o"><span class="label">Icon</span></a>
                                 <h2>
-                                 ssss   <a href="<?php Url::to(['post/view', 'id' => $post->id]); ?>"><?php echo $post->title; ?>
+                                 <a href="<?php Url::to(['post/view', 'id' => $post->id]); ?>"><?php echo $post->title; ?>
                                 </h2>
                             </header>
                             <p><?php echo $post->excerpt; ?>.</p>title
