@@ -11,6 +11,11 @@ $this->title = '>Register';
 ?>
 <?php $form = ActiveForm::begin([
     'id' => 'register-form',
+//    'options' => [
+//        'enctype'=>'multipart/form-data',
+//        'name'=>'form',
+//        'class'=>'form-register',
+//    ],
     'layout' => 'horizontal',
     'fieldConfig' => [
         'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",

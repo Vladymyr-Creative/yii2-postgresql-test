@@ -33,7 +33,7 @@ $this->title = Yii::$app->name;
 <section class="wrapper">
     <div class="inner">
         <header class="special">
-            <h2>Sem turpis amet semper</h2>
+            <h2>Sem turpis amet semper++++++++++++++</h2>
             <p>In arcu accumsan arcu adipiscing accumsan orci ac. Felis id enim aliquet. Accumsan ac integer
                 lobortis commodo ornare aliquet accumsan erat tempus amet porttitor.</p>
         </header>
@@ -46,19 +46,18 @@ $this->title = Yii::$app->name;
                             <header>
                                 <a href="#" class="icon fa-vcard-o"><span class="label">Icon</span></a>
                                 <h2>
-                                 <a href="<?php Url::to(['post/view', 'id' => $post->id]); ?>"><?php echo $post->title; ?>
+                                 <a href="<?php echo Url::to(['post/view', 'id' => $post->id]); ?>"><?php echo $post->title; ?>
                                 </h2>
                             </header>
                             <p><?php echo $post->excerpt; ?>.</p>title
                             <?php Html::img("@web/{$post->img}") ?>
 
                             <p>Category -
-                                <a href="<?php Url::to(['category/view', 'alias' => $post->category->alias]); ?>">
+                                <a href="<?php echo Url::to(['category/view', 'alias' => $post->category->alias]); ?>">
                                     <?php echo $post->category->title; ?>
                                 </a>.
                             </p>
-                            <p>Date - <?php echo $post->created_at; ?>.</p>
-                            <p>Date - <?php Yii::$app->formatter->asDate($post->created_at, "php:d.m.Y"); ?>.</p>
+                            <p>Date - <?php echo Yii::$app->formatter->asDate($post->created_at); ?>.</p>
                             <p>Description - <?php echo $post->description; ?>.</p>
                             <p>Keywords - <?php echo $post->keywords; ?>.</p>
                         </div>

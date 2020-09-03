@@ -14,10 +14,10 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
     ],
-//    'defaultRoute' => "post/index",
+    'defaultRoute' => "post/index",
     'components' => [
         'formatter' => [
-            'dateFormat' => 'dd.MM.yyyy',
+            'dateFormat' => 'php:d F Y',
 //                    'decimalSeparator' => ',',
 //                    'thousandSeparator' => ' ',
 //                    'currencyCode' => 'EUR',
@@ -25,7 +25,7 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'CtIdgB_gdnxp20Y9oLTWl7rgPCfG8Q3Y',
-            'baseUrl' => '',
+//            'baseUrl' => '',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -59,10 +59,10 @@ $config = [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-//                'page/<page:\d+>' => 'post/index',
-//                '/' => 'post/index',
-//                'post/<id:\d+>' => 'post/view',
-//                'category/<alias:[A-Za-z\d-]+>' => 'category/view'
+                'page/<page:\d+>' => 'post/index',
+                '/' => 'post/index',
+                'post/<id:\d+>' => 'post/view',
+                'category/<alias:[A-Za-z\d-]+>' => 'category/view'
             ],
         ],
     ],

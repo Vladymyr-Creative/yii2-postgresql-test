@@ -50,7 +50,7 @@ AppAsset::register($this);
                         feugiat eu faucibus. Integer ac sed amet praesent. Nunc lacinia ante nunc ac gravida.</p>
                 </section>
                 <section>
-                    <h4>Sem turpis amet semper</h4>
+                    <h4>Sem turpis amet semper-+-+-+-+-+-+-+-+-+</h4>
                     <ul class="alt">
                         <li><a href="#">Dolor pulvinar sed etiam.</a></li>
                         <li><a href="#">Etiam vel lorem sed amet.</a></li>

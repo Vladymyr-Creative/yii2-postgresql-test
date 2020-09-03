@@ -12,14 +12,6 @@ class PostController extends Controller
 {
     public function actionIndex()
     {
-//        $posts = Post::find()->all();
-//        return $this->render('index', [
-//            'posts'=> $posts
-//        ]);
-//OR
-//        return $this->render('index', compact('posts'));
-
-
         $query = Post::find()->with('category');
         $countQuery = clone $query;
         $pages = new Pagination([
@@ -42,7 +34,7 @@ class PostController extends Controller
 
     public function actionView($id)
     {
-        var_dump($id);
+        phpinfo();
         die;
     }
 
@@ -51,7 +43,6 @@ class PostController extends Controller
 //        if (!Yii::$app->user->isGuest) {
 //            return $this->goHome();
 //        }
-
         $model = new RegisterForm();
 //        if ($model->load(Yii::$app->request->post()) && $model->login()) {
 //            return $this->goBack();
