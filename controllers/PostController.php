@@ -4,9 +4,13 @@ namespace app\controllers;
 
 use app\models\RegisterForm;
 use Yii;
+use yii\db\Query;
 use yii\web\Controller;
 use yii\data\Pagination;
 use app\models\Post;
+use app\models\User;
+use yii\web\UploadedFile;
+use yii\widgets\Pjax;
 
 class PostController extends Controller
 {
@@ -38,19 +42,46 @@ class PostController extends Controller
         die;
     }
 
+    public function actionSubmit()
+    {
+        return "ajax";
+    }
+
+
+    public function actionTesting()
+    {
+        $query = new Query();
+        $query->select('*')
+            ->from('post')
+            ->leftJoin('product', 'post.id=product.id');
+        $command = $query->createCommand();
+        $response = $command->queryAll();
+        return $this->render('testing', [
+            'response' => $response
+        ]);
+    }
+
     public function actionRegister()
     {
-//        if (!Yii::$app->user->isGuest) {
-//            return $this->goHome();
-//        }
         $model = new RegisterForm();
+        $idUser = 2;//Yii::$app->request->get()['id'] ? Yii::$app->request->get()['id']: 1;
+        $user = User::find()->where(['id' => $idUser])->one();
 //        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-//            return $this->goBack();
-//        }
+        if (Yii::$app->request->isPost) {
+            Yii::$app->request->post()['User']['email'] ? $user->email = Yii::$app->request->post()['User']['email'] : '';
+            Yii::$app->request->post()['User']['username'] ? $user->username = Yii::$app->request->post()['User']['username'] : '';
+            Yii::$app->request->post()['User']['surname'] ? $user->surname = Yii::$app->request->post()['User']['surname'] : '';
+            $user->save();
 
-        $model->password = '';
+            ($_FILES['User']['name']['avatar'] ? $user->avatar = UploadedFile::getInstance($user, 'avatar') : '');
+            if ($user->avatar && $user->validate()) {
+                return;
+            }
+            Yii::$app->getResponse()->redirect(Yii::$app->getRequest()->getUrl());
+        }
+        $userInfo = User::find()->where(['id' => $idUser])->one();
         return $this->render('register', [
-            'model' => $model,
+            'userInfo' => $userInfo
         ]);
     }
 
