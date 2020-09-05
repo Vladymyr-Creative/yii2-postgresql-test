@@ -63,22 +63,30 @@ class PostController extends Controller
 
     public function actionRegister()
     {
-        $model = new RegisterForm();
+        $model = new RegisterForm;
         $idUser = 2;//Yii::$app->request->get()['id'] ? Yii::$app->request->get()['id']: 1;
         $user = User::find()->where(['id' => $idUser])->one();
 //        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-        if (Yii::$app->request->isPost) {
-            Yii::$app->request->post()['User']['email'] ? $user->email = Yii::$app->request->post()['User']['email'] : '';
-            Yii::$app->request->post()['User']['username'] ? $user->username = Yii::$app->request->post()['User']['username'] : '';
-            Yii::$app->request->post()['User']['surname'] ? $user->surname = Yii::$app->request->post()['User']['surname'] : '';
-            $user->save();
-
-            ($_FILES['User']['name']['avatar'] ? $user->avatar = UploadedFile::getInstance($user, 'avatar') : '');
-            if ($user->avatar && $user->validate()) {
-                return;
-            }
-            Yii::$app->getResponse()->redirect(Yii::$app->getRequest()->getUrl());
-        }
+        var_dump(Yii::$app->request->isPost);
+        echo "<br>";
+        var_dump(Yii::$app->request->post());
+        echo "<br>";
+        var_dump($model->load(Yii::$app->request->post()));
+        echo "<br>";
+        var_dump($model->validate());
+//        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+//            die('wewew');
+//            Yii::$app->request->post()['User']['email'] ? $user->email = Yii::$app->request->post()['User']['email'] : '';
+//            Yii::$app->request->post()['User']['username'] ? $user->username = Yii::$app->request->post()['User']['username'] : '';
+//            Yii::$app->request->post()['User']['surname'] ? $user->surname = Yii::$app->request->post()['User']['surname'] : '';
+//            $user->save();
+//
+//            ($_FILES['User']['name']['avatar'] ? $user->avatar = UploadedFile::getInstance($user, 'avatar') : '');
+//            if ($user->avatar && $user->validate()) {
+//                return;
+//            }
+//            Yii::$app->getResponse()->redirect(Yii::$app->getRequest()->getUrl());
+//        }
         $userInfo = User::find()->where(['id' => $idUser])->one();
         return $this->render('register', [
             'userInfo' => $userInfo
